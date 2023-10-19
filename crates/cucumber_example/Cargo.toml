@@ -1,0 +1,16 @@
+[package]
+name = "cucumber_example"
+version = "0.1.0"
+edition = "2021"
+
+[[test]]
+# target test file (cucumber.rs)
+name="cucumber"
+# allow adding a main function in the test file
+harness = false
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dev-dependencies]
+cucumber = { version = "0.20.1" , features = ["libtest"]}
+tokio = {  version="1.33.0" , features = ["full"]}
