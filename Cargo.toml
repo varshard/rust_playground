@@ -9,7 +9,8 @@ members = [
   "crates/tests",
   "crates/macros",
   "crates/linkedlist",
-  "crates/error_handling"
+  "crates/error_handling",
+  "crates/heap"
 ]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
