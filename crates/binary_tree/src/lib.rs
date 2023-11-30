@@ -1,3 +1,4 @@
+use std::cmp::Ordering;
 // https://codereview.stackexchange.com/questions/266554/bst-implementation-in-rust
 use std::ops::Add;
 
@@ -8,12 +9,14 @@ pub struct Tree<T> {
 }
 
 #[derive(Debug)]
-pub struct Node<T> {
+struct Node<T> {
     value: T,
     left: Option<TreeNode<T>>,
     right: Option<TreeNode<T>>,
 }
 
+// use Ord instead of PartialOrd, because it should always be possible to compare every 2 values of T.
+// if PartialOrd is used, 2 values may not be comparable
 impl<T: Ord> Node<T> {
     fn new(value: T) -> Self {
         Node {
@@ -23,23 +26,34 @@ impl<T: Ord> Node<T> {
         }
     }
     fn insert(&mut self, node: TreeNode<T>) {
-        if self.value > node.value {
-            if let Some(ref mut left) = self.left {
-                left.insert(node);
-            } else {
-                self.left = Some(node);
+        // just like usual less than, but cmp will technically reduce the chance of using the comparison backward or forgot to handle an equal
+        match self.value.cmp(&node.value) {
+            Ordering::Greater => {
+                match self.left {
+                    Some(ref mut left) => {
+                        left.insert(node);
+                    }
+                    None => {
+                        self.left = Some(node);
+                    }
+                }
             }
-        } else {
-            if let Some(ref mut right) = self.right {
-                right.insert(node);
-            } else {
-                self.right = Some(node);
+            Ordering::Less => {
+                match self.right {
+                    Some(ref mut right) => {
+                        right.insert(node);
+                    }
+                    None => {
+                        self.right = Some(node);
+                    }
+                }
             }
+            _ => {}
         }
     }
 }
 
-impl<T: Ord + Add<Output = T> + Default + Copy> Tree<T> {
+impl<T: Ord + Add<Output=T> + Default + Copy> Tree<T> {
     fn new() -> Self {
         Tree { root: None }
     }
