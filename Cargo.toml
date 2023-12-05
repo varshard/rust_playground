@@ -10,7 +10,10 @@ members = [
   "crates/macros",
   "crates/linkedlist",
   "crates/error_handling",
-  "crates/iterator"
+  "crates/iterator",
+  "crates/heap",
+  "crates/coinchange",
+  "crates/binary_tree"
 ]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
